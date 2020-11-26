@@ -16,10 +16,10 @@ Docker image from wordpress with de_DE.UTF-8 locales.
     services:
       db:
         image: mysql:5.7
-	volumes:
-	  - db_data:/var/lib/mysql
-	restart: always
-	environment:
+        volumes:
+          - db_data:/var/lib/mysql
+        restart: always
+        environment:
 	  - MYSQL_ROOT_PASSWORD=wordpress
 	  - MYSQL_DATABASE=wordpress
 	  - MYSQL_USER=wordpress
