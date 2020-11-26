@@ -9,10 +9,8 @@ ARG LOCALES_VERSION="2.28-10"
 ARG TZDATA_VERSION="2020d-0+deb10u1" 
 
 RUN apt-get update -qq && apt-get install -y --no-install-recommends\
-#	locales=${LOCALES_VERSION} \
-	locales \
-#	tzdata=${TZDATA_VERSION} \
-	tzdata \ 
+	locales=${LOCALES_VERSION} \
+	tzdata=${TZDATA_VERSION} \
 	&& rm -rf /var/lib/apt/lists/* 
 
 RUN sed -i -e 's/# de_DE.UTF-8 UTF-8/de_DE.UTF-8 UTF-8/' /etc/locale.gen \
