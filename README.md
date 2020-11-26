@@ -11,36 +11,59 @@ Docker image from wordpress with de_DE.UTF-8 locales.
 
 ## Docker Compose
 
-	version: '3.3'
+	version: '2'
         services:
           db:
-     image: mysql:5.7
-     volumes:
-       - db_data:/var/lib/mysql
-     restart: always
-     environment:
-       MYSQL_ROOT_PASSWORD: somewordpress
-       MYSQL_DATABASE: wordpress
-       MYSQL_USER: wordpress
-       MYSQL_PASSWORD: wordpress
+	     image: mysql:5.7
+	     volumes:
+	       - db_data:/var/lib/mysql
+	     restart: always
+	     environment:
+	       MYSQL_ROOT_PASSWORD: wordpress
+	       MYSQL_DATABASE: wordpress
+	       MYSQL_USER: wordpress
+	       MYSQL_PASSWORD: wordpress
 
-        wordpress:
-     depends_on:
-       - db
-     image: wordpress:latest
-     ports:
-       - "8000:80"
-     restart: always
-     environment:
-       WORDPRESS_DB_HOST: db:3306
-       WORDPRESS_DB_USER: wordpress
-       WORDPRESS_DB_PASSWORD: wordpress
-       WORDPRESS_DB_NAME: wordpress
-volumes:
-    db_data: {}
+	    wordpress:
+	     depends_on:
+	       - db
+	     image: wordpress:latest
+	     ports:
+	       - "80:80"
+	     restart: always
+	     environment:
+	       WORDPRESS_DB_HOST: db:3306
+	       WORDPRESS_DB_USER: wordpress
+	       WORDPRESS_DB_PASSWORD: wordpress
+	       WORDPRESS_DB_NAME: wordpress
+	  volumes:
+	    db_data: {}
 
 ## Docker Stack (Swarm)
 
+	version: '3.7'
+        services:
+          db:
+	     image: mysql:5.7
+	     volumes:
+	       - db_data:/var/lib/mysql
+	     environment:
+	       MYSQL_ROOT_PASSWORD: wordpress
+	       MYSQL_DATABASE: wordpress
+	       MYSQL_USER: wordpress
+	       MYSQL_PASSWORD: wordpress
+
+	    wordpress:
+	     image: wordpress:latest
+	     ports:
+	       - "80:80"
+	     environment:
+	       WORDPRESS_DB_HOST: db:3306
+	       WORDPRESS_DB_USER: wordpress
+	       WORDPRESS_DB_PASSWORD: wordpress
+	       WORDPRESS_DB_NAME: wordpress
+	  volumes:
+	    db_data: {}
 
 ## Changelog
 
