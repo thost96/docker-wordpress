@@ -1,20 +1,27 @@
-FROM "thost96/base:ubuntu-20.04"
+ARG TAG=5.5.3-php7.4-apache
 
-LABEL maintainer="info@thorstenreichelt.de"
+FROM wordpress:${TAG} 
 
-ARG APP_NAME=TEST
+LABEL maintainer="info@thorstenreichelt.de" 
 
-RUN apt-get update -qq && apt-get install -y -qq --no-install-recommends \
-	${APP_NAME}
-	&& rm -rf /var/lib/apt/lists/*
+ARG DEBIAN_FRONTEND=noninteractive 
+ARG LOCALES_VERSION="2.28-10" 
+ARG TZDATA_VERSION="2020d-0+deb10u1" 
 
-RUN groupadd ${APP_NAME} \
-	&& useradd -g ${APP_NAME} ${APP_NAME}
+RUN apt-get update -qq && apt-get install -y --no-install-recommends\
+#	locales=${LOCALES_VERSION} \
+	locales \
+#	tzdata=${TZDATA_VERSION} \
+	tzdata \ 
+	&& rm -rf /var/lib/apt/lists/* 
 
-RUN ln -sf /dev/stdout <logfile>
+RUN sed -i -e 's/# de_DE.UTF-8 UTF-8/de_DE.UTF-8 UTF-8/' /etc/locale.gen \
+	&& \dpkg-reconfigure --frontend=noninteractive locales \
+	&& \update-locale LANG=de_DE.UTF-8 \
+	&& cp /usr/share/zoneinfo/Europe/Berlin /etc/localtime 
 
-USER ${APP_NAME}
-EXPOSE <port>
-VOLUME [""]
-CMD ["", ""]
-HEALTHCHECK [""]
+
+ENV LANG="de_DE.UTF-8" \
+    LANGUAGE="de_DE.UTF-8" \
+    TZ="Europe/Berlin"
+
