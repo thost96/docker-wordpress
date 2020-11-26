@@ -7,64 +7,62 @@ Docker image from wordpress with de_DE.UTF-8 locales.
 ![Security Checks](https://github.com/thost96/docker-wordpress/workflows/Security%20Checks/badge.svg)
 
 ## Docker RUN
-
+    docker run --restart=always -e MYSQL_ROOT_PASSWORD=wordpress -e MYSQL_DATABASE=wordpress -e MYSQL_USER=wordpress -e MYSQL_PASSWORD=wordpress -v db_data:/var/lib/mysql mysql:5.7
+    docker run --restart=always -p 80:80 -e WORDPRESS_DB_HOST=db:3306 -e WORDPRESS_DB_USER=wordpress -e WORDPRESS_DB_PASSWORD=wordpress -e WORDPRESS_DB_NAME=wordpress wordpress:latest
 
 ## Docker Compose
 
     version: '2'
     services:
       db:
-	image: mysql:5.7
+        image: mysql:5.7
 	volumes:
-	- db_data:/var/lib/mysql
+	  - db_data:/var/lib/mysql
 	restart: always
 	environment:
-	MYSQL_ROOT_PASSWORD: wordpress
-	MYSQL_DATABASE: wordpress
-	MYSQL_USER: wordpress
-	MYSQL_PASSWORD: wordpress
-
+	  - MYSQL_ROOT_PASSWORD=wordpress
+	  - MYSQL_DATABASE=wordpress
+	  - MYSQL_USER=wordpress
+	  - MYSQL_PASSWORD=wordpress
       wordpress:
         depends_on:
-          - db
+	  - db
 	image: wordpress:latest
 	ports:
-	- "80:80"
+	  - "80:80"
 	restart: always
 	environment:
-	WORDPRESS_DB_HOST: db:3306
-	WORDPRESS_DB_USER: wordpress
-	WORDPRESS_DB_PASSWORD: wordpress
-	WORDPRESS_DB_NAME: wordpress
-      
-      volumes:
-	db_data: {}
+	  - WORDPRESS_DB_HOST=db:3306
+	  - WORDPRESS_DB_USER=wordpress
+	  - WORDPRESS_DB_PASSWORD=wordpress
+	  - WORDPRESS_DB_NAME=wordpress
+    volumes:
+      - db_data
 
 ## Docker Stack (Swarm)
 
-	version: '3.7'
-        services:
-          db:
-	     image: mysql:5.7
-	     volumes:
-	       - db_data:/var/lib/mysql
-	     environment:
-	       MYSQL_ROOT_PASSWORD: wordpress
-	       MYSQL_DATABASE: wordpress
-	       MYSQL_USER: wordpress
-	       MYSQL_PASSWORD: wordpress
-
-	    wordpress:
-	     image: wordpress:latest
-	     ports:
-	       - "80:80"
-	     environment:
-	       WORDPRESS_DB_HOST: db:3306
-	       WORDPRESS_DB_USER: wordpress
-	       WORDPRESS_DB_PASSWORD: wordpress
-	       WORDPRESS_DB_NAME: wordpress
-	   volumes:
-	     db_data: {}
+    version: '3.7'
+    services:
+      db:
+        image: mysql:5.7
+	volumes:
+	  - db_data:/var/lib/mysql
+	environment:
+	  - MYSQL_ROOT_PASSWORD=wordpress
+	  - MYSQL_DATABASE=wordpress
+	  - MYSQL_USER=wordpress
+	  - MYSQL_PASSWORD=wordpress
+      wordpress:
+        image: wordpress:latest
+	ports:
+	  - "80:80"
+	environment:
+	  - WORDPRESS_DB_HOST=db:3306
+	  - WORDPRESS_DB_USER=wordpress
+	  - WORDPRESS_DB_PASSWORD=wordpress
+	  - WORDPRESS_DB_NAME=wordpress
+    volumes:
+      - db_data
 
 ## Changelog
 
