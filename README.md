@@ -11,7 +11,6 @@ Docker image from wordpress with de_DE.UTF-8 locales.
     docker run --restart=always -p 80:80 -e WORDPRESS_DB_HOST=db:3306 -e WORDPRESS_DB_USER=wordpress -e WORDPRESS_DB_PASSWORD=wordpress -e WORDPRESS_DB_NAME=wordpress wordpress:latest
 
 ## Docker Compose
-
     version: '2'
     services:
       db:
@@ -20,16 +19,16 @@ Docker image from wordpress with de_DE.UTF-8 locales.
           - db_data:/var/lib/mysql
         restart: always
         environment:
-	  - MYSQL_ROOT_PASSWORD=wordpress
-	  - MYSQL_DATABASE=wordpress
-	  - MYSQL_USER=wordpress
-	  - MYSQL_PASSWORD=wordpress
+          - MYSQL_ROOT_PASSWORD=wordpress
+          - MYSQL_DATABASE=wordpress
+          - MYSQL_USER=wordpress
+          - MYSQL_PASSWORD=wordpress
       wordpress:
         depends_on:
-	  - db
+          - db
 	image: wordpress:latest
 	ports:
-	  - "80:80"
+          - "80:80"
 	restart: always
 	environment:
 	  - WORDPRESS_DB_HOST=db:3306
@@ -48,27 +47,29 @@ Docker image from wordpress with de_DE.UTF-8 locales.
 	volumes:
 	  - db_data:/var/lib/mysql
 	environment:
-	  - MYSQL_ROOT_PASSWORD=wordpress
-	  - MYSQL_DATABASE=wordpress
-	  - MYSQL_USER=wordpress
-	  - MYSQL_PASSWORD=wordpress
+          - MYSQL_ROOT_PASSWORD=wordpress
+          - MYSQL_DATABASE=wordpress
+          - MYSQL_USER=wordpress
+          - MYSQL_PASSWORD=wordpress
       wordpress:
         image: wordpress:latest
 	ports:
-	  - "80:80"
+          - "80:80"
 	environment:
-	  - WORDPRESS_DB_HOST=db:3306
-	  - WORDPRESS_DB_USER=wordpress
-	  - WORDPRESS_DB_PASSWORD=wordpress
-	  - WORDPRESS_DB_NAME=wordpress
+          - WORDPRESS_DB_HOST=db:3306
+          - WORDPRESS_DB_USER=wordpress
+          - WORDPRESS_DB_PASSWORD=wordpress
+          - WORDPRESS_DB_NAME=wordpress
     volumes:
       - db_data
 
 ## Changelog
 
-### 1.0.1 (pending)
+### 1.1.0 (03.01.2021)
 * (thost96) - pinned versions of locales and tzdata
 * (thost96) - added Docker run, Compose and Stack templates
+* (thost96) - fixed markdown typos 
+* (thost96) - added wordpress 5.6.0 
 
 ### 1.0.0 (26.11.2020)
 * (thost96) - initial release
