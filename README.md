@@ -27,14 +27,14 @@ Docker image from wordpress with de_DE.UTF-8 locales.
         depends_on:
           - db
 	image: wordpress:latest
-	ports:
+        ports:
           - "80:80"
-	restart: always
-	environment:
-	  - WORDPRESS_DB_HOST=db:3306
-	  - WORDPRESS_DB_USER=wordpress
-	  - WORDPRESS_DB_PASSWORD=wordpress
-	  - WORDPRESS_DB_NAME=wordpress
+        restart: always
+        environment:
+          - WORDPRESS_DB_HOST=db:3306
+          - WORDPRESS_DB_USER=wordpress
+          - WORDPRESS_DB_PASSWORD=wordpress
+          - WORDPRESS_DB_NAME=wordpress
     volumes:
       - db_data
 
@@ -44,18 +44,18 @@ Docker image from wordpress with de_DE.UTF-8 locales.
     services:
       db:
         image: mysql:5.7
-	volumes:
-	  - db_data:/var/lib/mysql
-	environment:
+        volumes:
+          - db_data:/var/lib/mysql
+        environment:
           - MYSQL_ROOT_PASSWORD=wordpress
           - MYSQL_DATABASE=wordpress
           - MYSQL_USER=wordpress
           - MYSQL_PASSWORD=wordpress
       wordpress:
         image: wordpress:latest
-	ports:
+        ports:
           - "80:80"
-	environment:
+        environment:
           - WORDPRESS_DB_HOST=db:3306
           - WORDPRESS_DB_USER=wordpress
           - WORDPRESS_DB_PASSWORD=wordpress
@@ -65,11 +65,14 @@ Docker image from wordpress with de_DE.UTF-8 locales.
 
 ## Changelog
 
+### 1.1.1 (pending)
+* (thost96) - fixed markdown typos
+
 ### 1.1.0 (03.01.2021)
 * (thost96) - pinned versions of locales and tzdata
 * (thost96) - added Docker run, Compose and Stack templates
-* (thost96) - fixed markdown typos 
-* (thost96) - added wordpress 5.6.0 
+* (thost96) - fixed markdown typos
+* (thost96) - added wordpress 5.6.0
 
 ### 1.0.0 (26.11.2020)
 * (thost96) - initial release
