@@ -26,7 +26,7 @@ Docker image from wordpress with de_DE.UTF-8 locales.
       wordpress:
         depends_on:
           - db
-	image: wordpress:latest
+        image: wordpress:latest
         ports:
           - "80:80"
         restart: always
