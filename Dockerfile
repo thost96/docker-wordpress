@@ -4,13 +4,11 @@ FROM wordpress:${TAG}
 
 LABEL maintainer="info@thorstenreichelt.de" 
 
-ARG DEBIAN_FRONTEND=noninteractive 
-ARG LOCALES_VERSION="2.28-10" 
-ARG TZDATA_VERSION="2020d-0+deb10u1" 
+ARG DEBIAN_FRONTEND="noninteractive"
 
-RUN apt-get update -qq && apt-get install -y --no-install-recommends\
-	locales=${LOCALES_VERSION} \
-	tzdata=${TZDATA_VERSION} \
+RUN apt-get update -qq && apt-get install -y --no-install-recommends \
+	locales=2.28-10 \
+	tzdata=2020d-0+deb10u1 \
 	&& rm -rf /var/lib/apt/lists/* 
 
 RUN sed -i -e 's/# de_DE.UTF-8 UTF-8/de_DE.UTF-8 UTF-8/' /etc/locale.gen \
@@ -18,8 +16,5 @@ RUN sed -i -e 's/# de_DE.UTF-8 UTF-8/de_DE.UTF-8 UTF-8/' /etc/locale.gen \
 	&& \update-locale LANG=de_DE.UTF-8 \
 	&& cp /usr/share/zoneinfo/Europe/Berlin /etc/localtime 
 
-
-ENV LANG="de_DE.UTF-8" \
-    LANGUAGE="de_DE.UTF-8" \
+ENV LANGUAGE="de_DE.UTF-8" \
     TZ="Europe/Berlin"
-

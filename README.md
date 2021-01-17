@@ -65,8 +65,10 @@ Docker image from wordpress with de_DE.UTF-8 locales.
 
 ## Changelog
 
-### 1.1.1 (pending)
+### 1.2.0 (17.01.2021)
 * (thost96) - fixed markdown typos
+* (thost96) - moved to global standard and simplified builds
+* (thost96) - added snyk for security tests
 
 ### 1.1.0 (03.01.2021)
 * (thost96) - pinned versions of locales and tzdata
